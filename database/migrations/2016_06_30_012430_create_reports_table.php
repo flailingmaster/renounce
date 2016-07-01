@@ -25,7 +25,7 @@ class CreateReportsTable extends Migration
         $table->string('title');
         $table->mediumText('excerpts');
         $table->mediumText('agencies');
-        $table->string('document_number');
+        $table->string('document_number')->unique();
 
         });
     }
