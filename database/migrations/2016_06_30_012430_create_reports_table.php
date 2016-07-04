@@ -15,18 +15,18 @@ class CreateReportsTable extends Migration
       Schema::create('reports', function (Blueprint $table) {
         $table->increments('id');
         $table->timestamps();
-        $table->date('publication_date');
-        $table->string('type');
-        $table->string('public_inspection_pdf_url');
-        $table->string('html_url');
-        $table->string('pdf_url');
-        $table->string('full_text_xml_url');
-        $table->mediumText('full_text_xml');
-        $table->string('title');
-        $table->mediumText('excerpts');
-        $table->mediumText('agencies');
+        $table->date('publication_date')->nullable();
+        $table->string('type', 50)->nullable();
+        $table->string('public_inspection_pdf_url', 2000)->nullable();
+        $table->string('html_url', 2000)->nullable();
+        $table->string('pdf_url',2000)->nullable();
+        $table->string('full_text_xml_url',2000)->nullable();
+        $table->mediumText('full_text_xml')->nullable();
+        $table->string('title')->nullable();
+        $table->mediumText('excerpts')->nullable();
+        $table->mediumText('agencies')->nullable();
         $table->string('document_number')->unique();
-
+        $table->text('abstract')->nullable();
         });
     }
 
