@@ -1,5 +1,6 @@
 <?php
 use App\Report;
+use App\Name;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -62,14 +63,13 @@ class NameTableSeeder extends Seeder {
        $data = json_decode($json, TRUE);
 
        foreach ($data as $obj) {
-         $test = App\Report::find($obj['report_id']);
+         $holder = App\Report::find($obj['report_id']);
 
-         //$this->command->info("test is $test->document_number!\n");
          //$this->command->info("test is {$obj['first_name']}!\n");
-         Report::create(array(
+         Name::create(array(
            'id' => $obj['id'],
            'name' => $obj['first_name'],
-           'document_number' => $test->document_number,
+           'document_number' => $holder->document_number,
          ));
         }
 
