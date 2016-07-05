@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call('ReportTableSeeder');
         $this->command->info('Report table seeded!');
+        $this->call('NameTableSeeder');
     }
 }
 
@@ -43,6 +44,33 @@ class ReportTableSeeder extends Seeder {
            'abstract' => $obj['abstract'],
            'document_number' => $obj['document_number'],
            ));
+        }
+
+    }
+
+}
+
+
+class NameTableSeeder extends Seeder {
+
+    public function run()
+    {
+
+
+       DB::table('names')->delete();
+       $json = File::get("database/data/sinatradefectpeople.json");
+       $data = json_decode($json, TRUE);
+
+       foreach ($data as $obj) {
+         $test = App\Report::find($obj['report_id']);
+
+         //$this->command->info("test is $test->document_number!\n");
+         //$this->command->info("test is {$obj['first_name']}!\n");
+         Report::create(array(
+           'id' => $obj['id'],
+           'name' => $obj['first_name'],
+           'document_number' => $test->document_number,
+         ));
         }
 
     }
