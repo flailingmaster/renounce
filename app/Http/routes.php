@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('report', 'ReportController', ['only' => [
+    'index', 'show'
+]]);
+
+Route::resource('name', 'NameController', ['only' => [
+    'index', 'show'
+]]);
