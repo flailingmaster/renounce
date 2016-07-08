@@ -10,9 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+use App\Report;
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    $reports = Report::orderBy('publication_date', 'asc')->get();
+    return view('reports', ['reports' => $reports]);
 });
 
 Route::resource('report', 'ReportController', ['only' => [
