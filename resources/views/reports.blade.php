@@ -18,7 +18,7 @@
           <td>{{ $report->publication_date }}</td>
           <td>{{ $report->document_number }}</td>
           <td colspan=2>{{ $report->title }}</td>
-          <td>flailing</td>
+          <td>{{ $report->names()->count() }}</td>
         </tr>
       @endforeach
 
