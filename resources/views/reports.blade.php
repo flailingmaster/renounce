@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <table>
+  <table class="table-borders">
     <thead>
       <tr>
         <th>ID</th>
