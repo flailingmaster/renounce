@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Name;
 
 class NameController extends Controller
 {
@@ -15,7 +16,8 @@ class NameController extends Controller
      */
     public function index()
     {
-        //
+       $names = Name::orderBy('document_number', 'asc')->get();
+       return view('names', ['names' => $names]);
     }
 
     /**
