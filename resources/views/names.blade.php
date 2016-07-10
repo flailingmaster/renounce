@@ -20,4 +20,7 @@
 
     </tbody>
   </table>
+<div class="pagination">
+{!! $names->render() !!}
+</div>
 @endsection

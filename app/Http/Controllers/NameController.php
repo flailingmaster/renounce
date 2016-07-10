@@ -16,7 +16,7 @@ class NameController extends Controller
      */
     public function index()
     {
-       $names = Name::orderBy('document_number', 'asc')->get();
+       $names = Name::orderBy('document_number', 'asc')->paginate(500);
        return view('names', ['names' => $names]);
     }
 

@@ -258,4 +258,30 @@ hr {
           .table-borders tbody td button {
             font-size: .8em; } }
 
+.pagination {
+  text-align: center; }
+  .pagination ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    text-align: center; }
+    .pagination ul li {
+      display: inline;
+      list-style: none;
+      background: white;
+      border-radius: 0.1875em;
+      border: 1px solid #444;
+      color: #333;
+      outline: none;
+      padding: 0.375em 15px;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out; }
+    .pagination ul ul li {
+      display: none; }
+      .pagination ul ul li:nth-child(1), .pagination ul ul li:nth-child(2), .pagination ul ul li:nth-child(3) {
+        display: inline; }
+      @media screen and (min-width: 900px) {
+        .pagination ul ul li {
+          display: inline; } }
+
 /*# sourceMappingURL=app.css.map */
