@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Report;
 
 class ReportController extends Controller
 {
@@ -48,6 +49,7 @@ class ReportController extends Controller
     public function show($id)
     {
         //
+        return view('report', ['report' => Report::findOrFail($id)]);
     }
 
     /**

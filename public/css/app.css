@@ -284,4 +284,30 @@ hr {
         .pagination ul ul li {
           display: inline; } }
 
+section {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto; }
+  section::after {
+    clear: both;
+    content: "";
+    display: block; }
+  section aside {
+    color: #e85100;
+    float: left;
+    display: block;
+    margin-right: 2.5641025641%;
+    width: 28.2051282051%; }
+    section aside:last-child {
+      margin-right: 0; }
+  section detail {
+    color: black;
+    float: left;
+    display: block;
+    margin-right: 2.5641025641%;
+    width: 79.4871794872%;
+    margin-right: 0; }
+    section detail:last-child {
+      margin-right: 0; }
+
 /*# sourceMappingURL=app.css.map */

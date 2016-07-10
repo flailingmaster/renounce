@@ -149,3 +149,17 @@ $font-stack-system: $helvetica;
 
   }
 }
+
+section {
+  @include outer-container;
+  aside {
+    color:#e85100;
+    @include span-columns(3);
+  }
+
+  detail {
+    color: black;
+    @include span-columns(8);
+    @include omega();
+     }
+}
