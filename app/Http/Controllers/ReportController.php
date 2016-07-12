@@ -49,7 +49,7 @@ class ReportController extends Controller
     public function show($id)
     {
         //
-        return view('report', ['report' => Report::findOrFail($id)]);
+        return view('report', ['report' => Report::with(['names'])->findOrFail($id)]);
     }
 
     /**

@@ -7,6 +7,12 @@
 $base-border-color: #444;
 $base-border-radius: em(3);
 $font-stack-system: $helvetica;
+$main-font: Helvetica, Arial, sans-serif;
+
+body {
+  @include outer-container;
+
+}
 
 .table-borders {
   $table-border-color: $base-border-color;
@@ -152,6 +158,7 @@ $font-stack-system: $helvetica;
 
 section {
   @include outer-container;
+
   aside {
     color:#e85100;
     @include span-columns(3);
@@ -159,7 +166,6 @@ section {
 
   detail {
     color: black;
-    @include span-columns(8);
-    @include omega();
+    @include span-columns(7);
      }
 }
