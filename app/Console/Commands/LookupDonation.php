@@ -40,6 +40,12 @@ class LookupDonation extends Command
     {
       $name = $this->argument('name');
       $this->info("congrats. this is the $name");
+      $donations = $this->lookup($name);
+        //
+    }
+
+    public function lookup($name)
+    {
       $url = "https://www.opensecrets.org/indivs/";
 
       $client = new Client();
@@ -51,23 +57,37 @@ class LookupDonation extends Command
 
       // submit that form
       $crawler = $client->submit($form);
-
+      $donation = [];
       $crawler->filter('tbody > tr')->each(function ($node, $i) {
-        $donation = [];
+        $row = [];
         $node->filter('td')->each(function($inner, $i) {
         switch($i) {
           case 0:
             $first = explode("<br>",$inner->html());
-            $this->info( "name: ". $first[0]);
-            $this->info( "location: ". $first[1]);
+            $row['name'] = $first[0];
+            $row['location'] = $first[1];
             break;
+          case 1:
+            $row['occupation'] = $inner->text();
+            break;
+          case 2:
+            $row['date'] = $inner->text();
+            break;
+          case 3:
+            $row['amount'] = $inner->text();
+            break;
+          case 4:
+            $row['recipient'] = $inner->text();
+            break;
+
           default:
-            $this->info( $inner->text());
+            $this->info( "additional info: ".$inner->text());
             break;
           }
+          $this->info("this is the cell: \n".print_r($row, TRUE));
         });
 
       });
-        //
+
     }
 }
