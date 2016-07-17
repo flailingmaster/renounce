@@ -31,20 +31,20 @@ class ReportTableSeeder extends Seeder {
          foreach ($data as $obj) {
            Report::create(array(
 
-           'id' => $obj['id'],
-           'publication_date' => $obj['publication_date'],
-           'type' => $obj['type'],
-           'public_inspection_pdf_url' => $obj['public_inspection_pdf_url'],
-           'html_url' => $obj['html_url'],
-           'pdf_url' => $obj['pdf_url'],
-           'full_text_xml_url' => $obj['full_text_xml_url'],
-           'full_text_xml' => $obj['full_text_xml'],
-           'title' => $obj['title'],
-           'excerpts' => $obj['excerpts'],
-           'agencies' => $obj['agencies'],
-           'abstract' => $obj['abstract'],
-           'document_number' => $obj['document_number'],
-           ));
+             'id' => $obj['id'],
+             'publication_date' => $obj['publication_date'],
+             'type' => $obj['type'],
+             'public_inspection_pdf_url' => $obj['public_inspection_pdf_url'],
+             'html_url' => $obj['html_url'],
+             'pdf_url' => $obj['pdf_url'],
+             'full_text_xml_url' => $obj['full_text_xml_url'],
+             'full_text_xml' => $obj['full_text_xml'],
+             'title' => $obj['title'],
+             'excerpts' => $obj['excerpts'],
+             'agencies' => $obj['agencies'],
+             'abstract' => $obj['abstract'],
+             'document_number' => $obj['document_number'],
+             ));
         }
 
     }

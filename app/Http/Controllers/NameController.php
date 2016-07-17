@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Name;
+use App\Helpers\Contracts\OpenSecretsContract;
 
 class NameController extends Controller
 {
@@ -47,10 +48,23 @@ class NameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, OpenSecretsContract $opensecrets)
     {
-        //
-        return view('name', ['name' => Name::with(['donations'])->findOrFail($id)]);
+        $name = Name::with(['donations'])->findOrFail($id);
+        $service_run = FALSE;
+        if($name->queried == FALSE) {
+          $service_run = TRUE;
+          $name->queried = TRUE;
+          $raw_result = $opensecrets->lookup($name->name);
+          $name->raw_count = count($raw_result);
+          if ($name->raw_count == 0) {
+            $name->cached_raw = NULL;
+          } else {
+            $name->cached_raw = json_encode($opensecrets->lookup($name->name));
+          }
+          $name->save();
+        }
+        return view('name', ['name' => $name, 'service_run' => $service_run]);
     }
 
     /**
