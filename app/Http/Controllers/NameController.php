@@ -50,6 +50,7 @@ class NameController extends Controller
     public function show($id)
     {
         //
+        return view('name', ['name' => Name::with(['donations'])->findOrFail($id)]);
     }
 
     /**

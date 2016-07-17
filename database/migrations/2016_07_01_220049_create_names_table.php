@@ -16,6 +16,9 @@ class CreateNamesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('document_number')->index();
+            $table->json('cached_raw');
+            $table->integer('raw_count')->default(0);
+            $table->boolean('queried')->default(false);
 
             $table->timestamps();
         });

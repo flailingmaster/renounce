@@ -32,7 +32,7 @@ class OpenSecrets implements OpenSecretsContract
             case 0:
               $first = explode("<br>",$element->ownerDocument->savehtml($element));
               $row['name'] = str_replace("<td>", "", $first[0]);
-              $row['location'] = str_replace("</td>", "", $first[1]);
+              $row['location'] = str_replace("</td>\n", "", $first[1]);
               break;
             case 1:
               $row['occupation'] = $element->nodeValue;

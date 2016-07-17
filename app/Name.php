@@ -3,6 +3,7 @@
 namespace App;
 use App\Report;
 use App\Donation;
+use App\Helpers\Contracts\OpenSecretsContract;
 
 use Illuminate\Database\Eloquent\Model;
 
