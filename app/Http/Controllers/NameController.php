@@ -52,6 +52,7 @@ class NameController extends Controller
     {
         $name = Name::with(['donations'])->findOrFail($id);
         $service_run = FALSE;
+        $parsed_donations = [];
         if($name->queried == FALSE) {
           $service_run = TRUE;
           $name->queried = TRUE;
@@ -60,11 +61,12 @@ class NameController extends Controller
           if ($name->raw_count == 0) {
             $name->cached_raw = NULL;
           } else {
-            $name->cached_raw = json_encode($opensecrets->lookup($name->name));
+            $name->cached_raw = json_encode($raw_result);
+            $parsed_donations = $raw_result;
           }
           $name->save();
         }
-        return view('name', ['name' => $name, 'service_run' => $service_run]);
+        return view('name', ['name' => $name, 'service_run' => $service_run, 'parsed_donations' => $parsed_donations]);
     }
 
     /**
