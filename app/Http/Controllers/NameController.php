@@ -54,21 +54,33 @@ class NameController extends Controller
         $service_run = FALSE;
         $parsed_donations = [];
         if($name->queried == FALSE) {
-          $service_run = TRUE;
-          $name->queried = TRUE;
-          $raw_result = $opensecrets->lookup($name->name);
-          $name->raw_count = count($raw_result);
-          if ($name->raw_count == 0) {
-            $name->cached_raw = NULL;
-          } else {
-            $name->cached_raw = json_encode($raw_result);
-            $parsed_donations = $raw_result;
-          }
-          $name->save();
+          $this->refresh_cache($name, $opensecrets);
         }
         return view('name', ['name' => $name, 'service_run' => $service_run, 'parsed_donations' => $parsed_donations]);
     }
 
+    /**
+     * Run Open Secrets Lookup and update raw cache
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function refresh_cache($name, $opensecrets)
+    {
+      
+      $raw_result = $opensecrets->lookup($name->name);
+      $service_run = TRUE;
+      $name->queried = TRUE;
+
+      $name->raw_count = count($raw_result);
+      if ($name->raw_count == 0) {
+        $name->cached_raw = NULL;
+      } else {
+        $name->cached_raw = json_encode($raw_result);
+        $parsed_donations = $raw_result;
+      }
+      $name->save();
+    }
     /**
      * Show the form for editing the specified resource.
      *
