@@ -13,7 +13,7 @@ class CacheDonation extends Command
      *
      * @var string
      */
-    protected $signature = 'secrets:cache {id?} {--test} {--all}';
+    protected $signature = 'secrets:cache {id?} {--test} {--all} {--n=10}';
 
     /**
      * The console command description.
@@ -47,8 +47,9 @@ class CacheDonation extends Command
         $this->multiplelookup(array(array('id' => $id)));
       } elseif ($this->option('test'))
       {
+        $query_number = $this->option('n');
         //$id_array = Name::all(['id'])->where('queried', false)->take(10)->toArray();
-        $id_array = Name::where('queried', false)->take(10)->get(['id'])->toArray();
+        $id_array = Name::where('queried', false)->take($query_number)->get(['id'])->toArray();
         $this->multiplelookup($id_array);
       //$this->info("this is the donation: \n".print_r($donations, TRUE));
       }
@@ -79,7 +80,7 @@ class CacheDonation extends Command
         $nameobj->save();
 
         //$this->info("sleeping");
-        //sleep(mt_rand(1, 3));
+        sleep(mt_rand(0, 2));
       }
       $this->table(['id', 'count', 'name'], $output_array);
     }
