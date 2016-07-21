@@ -53,12 +53,10 @@ class OpenSecrets implements OpenSecretsContract
             }
             $inc++;
         }
-          // dev buttress code
-          //$this->info("this is the row: \n".print_r($row, TRUE));
+
           $donation[] = $row;
       });
           return $donation;
-          //$this->info("this is the donation: \n".print_r($donation, TRUE));
     }
 
 }
