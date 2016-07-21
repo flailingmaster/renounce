@@ -62,12 +62,12 @@ class NameController extends Controller
     /**
      * Run Open Secrets Lookup and update raw cache
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int  $id, OpenSecretsContract $opensecrets
+     * @return none
      */
-    public function refresh_cache($name, $opensecrets)
+    public function refresh_cache($name, OpenSecretsContract $opensecrets)
     {
-      
+
       $raw_result = $opensecrets->lookup($name->name);
       $service_run = TRUE;
       $name->queried = TRUE;
