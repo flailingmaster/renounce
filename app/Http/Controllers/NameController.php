@@ -55,7 +55,10 @@ class NameController extends Controller
         $parsed_donations = [];
         if($name->queried == FALSE) {
           $this->refresh_cache($name, $opensecrets);
+        } else {
+          $parsed_donations = json_decode($name->cached_raw);
         }
+
         return view('name', ['name' => $name, 'service_run' => $service_run, 'parsed_donations' => $parsed_donations]);
     }
 
