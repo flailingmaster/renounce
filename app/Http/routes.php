@@ -11,6 +11,7 @@
 |
 */
 use App\Report;
+use App\Name;
 
 Route::get('/', function () {
     //return view('welcome');
@@ -21,6 +22,11 @@ Route::get('/', function () {
 Route::resource('report', 'ReportController', ['only' => [
     'index', 'show'
 ]]);
+
+Route::get('name/donated', function () {
+    $names = Name::where('raw_count', '>', 0)->orderBy('raw_count', 'desc')->paginate(100);
+    return view('names', ['names' => $names]);
+});
 
 Route::resource('name', 'NameController', ['only' => [
     'index', 'show'
