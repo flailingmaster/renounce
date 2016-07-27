@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+<h1>Summary</h1>
+
+<section><aside>num_reports:</aside><detail>{{ $num_reports }}</detail></section>
+<section><aside>names_w_donations:</aside><detail>{{ $names_w_donations }}</detail></section>
+<section><aside>num_names:</aside><detail>{{ $num_names }}</detail></section>
+<br><br>
+<h1>Details</h1>
+
   <table class="table-borders">
     <thead>
       <tr>

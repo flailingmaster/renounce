@@ -64,7 +64,7 @@ class CacheDonation extends Command
         $name = $nameobj->name;
         $donations = $this->opensecrets->lookup($name);
         $output_array[] = ['id' => $id['id'], 'count' => count($donations), 'name' => $name];
-        $this->info(" id: ".$id['id']."\t\tname: $name");
+        $this->info(" id: ".$id['id']."\t\tcount: ".count($donations)."\t\tname: $name");
 
         //$raw_result = $opensecrets->lookup($name->name);
         $service_run = TRUE;

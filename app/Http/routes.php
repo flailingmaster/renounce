@@ -16,7 +16,12 @@ use App\Name;
 Route::get('/', function () {
     //return view('welcome');
     $reports = Report::orderBy('publication_date', 'asc')->get();
-    return view('reports', ['reports' => $reports]);
+    //$reports_wo_names = Report::where('raw_count', 0)->count();
+    //count for each report $report->names()->count()
+    $num_reports = Report::all()->count();
+    $names_w_donations = Name::where('raw_count', ">", 0)->count();
+    $num_names = Name::all()->count();
+    return view('reports', ['reports' => $reports, 'num_reports' => $num_reports, 'names_w_donations' => $names_w_donations, 'num_names' => $num_names]);
 });
 
 Route::resource('report', 'ReportController', ['only' => [
