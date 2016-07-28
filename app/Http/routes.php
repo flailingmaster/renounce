@@ -12,6 +12,7 @@
 */
 use App\Report;
 use App\Name;
+use DB;
 
 Route::get('/', function () {
     //return view('welcome');
@@ -20,8 +21,11 @@ Route::get('/', function () {
     //count for each report $report->names()->count()
     $num_reports = Report::all()->count();
     $names_w_donations = Name::where('raw_count', ">", 0)->count();
+    $num_empty_reports = DB::select('select count(*) as count from
+    (select reports.id, reports.document_number from reports left join names on reports.document_number = names.document_number group by reports.id having count(names.id) = 0) as temp');
     $num_names = Name::all()->count();
-    return view('reports', ['reports' => $reports, 'num_reports' => $num_reports, 'names_w_donations' => $names_w_donations, 'num_names' => $num_names]);
+    $num_donations = Name::all()->sum('raw_count');
+    return view('reports', ['reports' => $reports, 'num_reports' => $num_reports, 'names_w_donations' => $names_w_donations, 'num_names' => $num_names, 'num_empty_reports' => $num_empty_reports[0], 'num_donations' => $num_donations]);
 });
 
 Route::resource('report', 'ReportController', ['only' => [

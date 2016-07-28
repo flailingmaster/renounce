@@ -3,9 +3,11 @@
 @section('content')
 <h1>Summary</h1>
 
-<section><aside>num_reports:</aside><detail>{{ $num_reports }}</detail></section>
-<section><aside>names_w_donations:</aside><detail>{{ $names_w_donations }}</detail></section>
-<section><aside>num_names:</aside><detail>{{ $num_names }}</detail></section>
+<section><aside>Total number of reports:</aside><detail>{{ $num_reports }}</detail></section>
+<section><aside>Number of reports with 0 names:</aside><detail> {{ $num_empty_reports->count }}</detail></section>
+<section><aside>Total number of names:</aside><detail>{{ $num_names }}</detail></section>
+<section><aside>Number of names with donations:</aside><detail>{{ $names_w_donations }}</detail></section>
+<section><aside>Total number of donations:</aside><detail>{{ $num_donations }}</detail></section>
 <br><br>
 <h1>Details</h1>
 
