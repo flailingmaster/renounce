@@ -54,6 +54,7 @@ class NameController extends Controller
         $service_run = FALSE;
         $parsed_donations = [];
         if($name->queried == FALSE) {
+          $service_run = TRUE;
           $this->refresh_cache($name, $opensecrets);
         } else {
           $parsed_donations = json_decode($name->cached_raw);
@@ -72,7 +73,6 @@ class NameController extends Controller
     {
 
       $raw_result = $opensecrets->lookup($name->name);
-      $service_run = TRUE;
       $name->queried = TRUE;
 
       $name->raw_count = count($raw_result);
