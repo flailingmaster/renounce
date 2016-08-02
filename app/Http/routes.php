@@ -12,7 +12,6 @@
 */
 use App\Report;
 use App\Name;
-use DB;
 
 Route::get('/', function () {
     //return view('welcome');
