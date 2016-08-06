@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Name extends Model
 {
+  protected $fillable = array('name', 'document_number');
     //
   public function report() {
     return $this->belongsTo(Report::class, 'document_number', 'document_number');
