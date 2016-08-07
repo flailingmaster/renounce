@@ -60,11 +60,26 @@ class ReParseReport extends Command
             $this->info("$name_count names found.");
             if ($name_count > 0)
             {
-              $use_names = $this->ask('Create names from this table?');
-              if ($use_names == 'Y' || $use_names == 'y') {
+              $use_names = $this->ask('Create names from this table [y] or [r]etry?');
+              if ($use_names == 'C' || $use_names == 'y') {
                 $this->add_names($output_array);
                 $names_added += $name_count;
+              } elseif($use_names == 'R' || $use_names == 'r') {
+                $reparse = [];
+                foreach($output_array as $retry) {
+                  $reparse[] = preg_replace('/(?<!\ )(?<!-)[A-Z]/', ' $0', $retry);
+
+                }
+                $this->table(['document_number', 'name'], $reparse);
+                $name_count = count($reparse);
+                $this->info("$name_count names found.");
+                $use_names = $this->ask('Create names from this table [y] or [r]etry?');
+                if ($use_names == 'C' || $use_names == 'y') {
+                  $this->add_names($reparse);
+                  $names_added += $name_count;
+                }
               }
+
             }
           } else {
             $this->info('no xml found');
