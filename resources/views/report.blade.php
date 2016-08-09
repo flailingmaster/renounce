@@ -15,9 +15,10 @@
 <section><aside>agencies: </aside><detail>{{ $report->agencies }}</detail></section>
 <section><aside>document_number: </aside><detail>{{ $report->document_number }}</detail></section>
 <section><aside>abstract: </aside><detail>{{ $report->abstract }}</detail></section>
+<section><aside>name count: </aside><detail>{{ $report->names()->count() }}</detail></section>
 <section><aside>full_text_xml_url: </aside><detail>{{ $report->full_text_xml_url }}</detail></section>
 
-
+@if ($report->names()->count() > 0)
 <table class="table-borders">
   <thead>
     <tr>
@@ -41,5 +42,5 @@
 
   </tbody>
 </table>
-
+@endif
 @endsection

@@ -61,6 +61,7 @@ class ReportController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
