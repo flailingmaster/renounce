@@ -24,7 +24,8 @@ Route::get('/', function () {
     (select reports.id, reports.document_number from reports left join names on reports.document_number = names.document_number group by reports.id having count(names.id) = 0) as temp');
     $num_names = Name::all()->count();
     $num_donations = Name::all()->sum('raw_count');
-    return view('reports', ['reports' => $reports, 'num_reports' => $num_reports, 'names_w_donations' => $names_w_donations, 'num_names' => $num_names, 'num_empty_reports' => $num_empty_reports[0], 'num_donations' => $num_donations]);
+    $num_unqueried = Name::where('queried', false)->count();
+    return view('reports', ['reports' => $reports, 'num_reports' => $num_reports, 'names_w_donations' => $names_w_donations, 'num_names' => $num_names, 'num_empty_reports' => $num_empty_reports[0], 'num_donations' => $num_donations, 'num_unqueried' => $num_unqueried]);
 });
 
 Route::resource('report', 'ReportController', ['only' => [

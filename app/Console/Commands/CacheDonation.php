@@ -58,6 +58,7 @@ class CacheDonation extends Command
     public function multiplelookup($ids)
     {
       $output_array = [];
+      $current_count = Name::where('queried', false)->count();
       foreach($ids as $key => $id) {
 
         $nameobj = Name::findOrFail($id['id']);
@@ -82,7 +83,10 @@ class CacheDonation extends Command
         //$this->info("sleeping");
         sleep(mt_rand(0, 2));
       }
+      $final_count = Name::where('queried', false)->count();
       $this->table(['id', 'count', 'name'], $output_array);
+      $this->info("initial count: $current_count");
+      $this->info("final count: $final_count");
     }
 
 }
