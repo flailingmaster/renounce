@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Name;
+use App\Donation;
 
 class CreateDonations extends Command
 {
@@ -49,15 +51,48 @@ class CreateDonations extends Command
     public function lookup($ids)
     {
       $output_array = [];
-      $current_count = Name::where('queried', false)->count();
       foreach($ids as $key => $id) {
         $nameobj = Name::findOrFail($id['id']);
         if ($nameobj->raw_count > 0 && $nameobj->raw_count < 50) {
-          $nameobj->cached_raw = NULL;
+          $this->info("Found donations: $nameobj->raw_count");
+          $processed_count = 0;
+          $donation_array = [];
+          foreach (json_decode($nameobj->cached_raw) as $donation) {
+            $donation_array[] = array(
+              'raw_name' => $donation->name,
+              'name_id' => $nameobj->id,
+              'donation_date' => $donation->date,
+              'location' => $donation->location,
+              'occupation' => $donation->occupation,
+              'amount' => $donation->amount,
+              'recipient' => $donation->recipient,
+            );
+
+            $this->info("this is the info: $sketchystring");
+
+          }
         } else {
-          $nameobj->cached_raw = json_encode($donations);
-          $parsed_donations = $donations;
+          $this->info("no donation found");
         }
+      }
+    }
+    public function add_donations($donations_array)
+    {
+      foreach ($donation_array as $donation)
+      {
+        //$this->info('doc: '.$name['document_number']."\t\tname: ".$name['name']);
+        Donation::create(array(
+          'raw_name' => $donation['raw_name'],
+          'name_id' => $donation['name_id'],
+          'donation_date' => $donation['donation_date'],
+          'location' => $donation['location'],
+          'occupation' => $donation['occupation'],
+          'type' => $donation['type'],
+          'amount' => $donation['amount'],
+          'recipient' => $donation['recipient'],
+        ));
+
+      //$sketchystring = print_r($donation, TRUE);
       }
     }
 }

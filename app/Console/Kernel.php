@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\LookupDonation::class,
         Commands\CacheDonation::class,
         Commands\ReParseReport::class,
+        Commands\CreateDonations::class,
     ];
 
     /**
