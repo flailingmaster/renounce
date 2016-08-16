@@ -68,15 +68,17 @@ class CreateDonations extends Command
               'recipient' => $donation->recipient,
             );
 
-            $this->info("this is the info: $sketchystring");
+            //$this->info("this is the info: $sketchystring");
 
           }
+
+          $this->add_donations($donation_array);
         } else {
           $this->info("no donation found");
         }
       }
     }
-    public function add_donations($donations_array)
+    public function add_donations($donation_array)
     {
       foreach ($donation_array as $donation)
       {
@@ -87,7 +89,6 @@ class CreateDonations extends Command
           'donation_date' => $donation['donation_date'],
           'location' => $donation['location'],
           'occupation' => $donation['occupation'],
-          'type' => $donation['type'],
           'amount' => $donation['amount'],
           'recipient' => $donation['recipient'],
         ));
