@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Name;
 use App\Donation;
+use Carbon\Carbon;
 
 class CreateDonations extends Command
 {
@@ -58,21 +59,23 @@ class CreateDonations extends Command
           $processed_count = 0;
           $donation_array = [];
           foreach (json_decode($nameobj->cached_raw) as $donation) {
+            $format = 'n/d/y';
+            $date = Carbon::createFromFormat($format, $donation->date);
+
             $donation_array[] = array(
               'raw_name' => $donation->name,
               'name_id' => $nameobj->id,
-              'donation_date' => $donation->date,
+              'donation_date' => $date,
               'location' => $donation->location,
               'occupation' => $donation->occupation,
               'amount' => $donation->amount,
               'recipient' => $donation->recipient,
             );
 
-            //$this->info("this is the info: $sketchystring");
-
           }
-
           $this->add_donations($donation_array);
+          $nameobj->donations_processed = true;
+          $nameobj->save();
         } else {
           $this->info("no donation found");
         }
