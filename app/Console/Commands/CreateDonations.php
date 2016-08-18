@@ -14,7 +14,7 @@ class CreateDonations extends Command
      *
      * @var string
      */
-    protected $signature = 'secrets:create {id?} {--all} {--n=10}';
+    protected $signature = 'secrets:create {id?} {--all} {--test} {--n=10}';
 
     /**
      * The console command description.
@@ -45,6 +45,12 @@ class CreateDonations extends Command
         {
           $id = $this->argument('id');
           $this->lookup(array(array('id' => $id)));
+        } elseif ($this->option('test'))
+        {
+          $query_number = $this->option('n');
+          $id_array = Name::where('donations_processed', false)->whereRaw('raw_count > 0')->whereRaw('raw_count < 50' )->take($query_number)->get(['id'])->toArray();
+          $this->lookup($id_array);
+
         }
     }
 
