@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use App\Name;
 use App\Donation;
 use Carbon\Carbon;
+use NumberFormatter;
+
 
 class CreateDonations extends Command
 {
@@ -66,7 +68,26 @@ class CreateDonations extends Command
           $donation_array = [];
           foreach (json_decode($nameobj->cached_raw) as $donation) {
             $format = 'n/d/y';
-            $date = Carbon::createFromFormat($format, $donation->date);
+            $this->info("donation: ".$donation->date);
+
+            if ($donation->date != " ") {
+              $this->info("date: '$donation->date'");
+              $date = Carbon::createFromFormat($format, $donation->date);
+            } else {
+              $date = '0000-00-00';
+            }
+            $this->info("date: $date");
+
+            $fmt = new NumberFormatter('en-US', NumberFormatter::CURRENCY);
+            $num = str_replace("-", "", $donation->amount);
+            $refunded = false;
+            if ($num != $donation->amount)
+              $refunded = true;
+            $curr = "USD";
+            $dec = $refunded ? -1* $fmt->parseCurrency($num, $curr) : $fmt->parseCurrency($num, $curr);
+
+            //$dec = numfmt_parse_currency($fmt, $num, $curr);
+
 
             $donation_array[] = array(
               'raw_name' => $donation->name,
@@ -75,6 +96,7 @@ class CreateDonations extends Command
               'location' => $donation->location,
               'occupation' => $donation->occupation,
               'amount' => $donation->amount,
+              'int_amount' => $dec,
               'recipient' => $donation->recipient,
             );
 
@@ -82,6 +104,7 @@ class CreateDonations extends Command
           $this->add_donations($donation_array);
           $nameobj->donations_processed = true;
           $nameobj->save();
+
         } else {
           $this->info("no donation found");
         }
@@ -99,10 +122,11 @@ class CreateDonations extends Command
           'location' => $donation['location'],
           'occupation' => $donation['occupation'],
           'amount' => $donation['amount'],
+          'int_amount' => $donation['int_amount'],
           'recipient' => $donation['recipient'],
         ));
 
-      //$sketchystring = print_r($donation, TRUE);
+      $this->info(print_r($donation, TRUE));
       }
     }
 }
