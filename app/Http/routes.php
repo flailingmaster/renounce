@@ -12,6 +12,7 @@
 */
 use App\Report;
 use App\Name;
+use App\Donation;
 
 Route::get('/', function () {
     //return view('welcome');
@@ -38,5 +39,14 @@ Route::get('name/donated', function () {
 });
 
 Route::resource('name', 'NameController', ['only' => [
+    'index', 'show'
+]]);
+
+Route::get('donation/raw', function () {
+    $donations = Donation::all();
+    return view('donations_raw', ['donations' => $donations]);
+});
+
+Route::resource('donation', 'DonationController', ['only' => [
     'index', 'show'
 ]]);

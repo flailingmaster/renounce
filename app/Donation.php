@@ -8,8 +8,8 @@ class Donation extends Model
 {
     //
   protected $fillable = ['raw_name', 'name_id', 'donation_date', 'location', 'occupation', 'amount', 'recipient'];
-  
+
   public function name() {
-    return $this->belongsTo(Name::class, 'id', 'name_id');
+    return $this->belongsTo(Name::class, 'name_id', 'id');
   }
 }
