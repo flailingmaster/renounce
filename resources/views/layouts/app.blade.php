@@ -15,9 +15,11 @@
     <a href="javascript:void(0)" id="js-centered-navigation-mobile-menu" class="centered-navigation-mobile-menu">MENU</a>
     <nav role="navigation">
       <ul id="js-centered-navigation-menu" class="centered-navigation-menu show">
-        <li class="nav-link"><a href="/">Reports</a></li>
-        <li class="nav-link"><a href="/name">Names</a></li>
-        <li class="nav-link"><a href="/name/donated">Filtered Names</a></li>
+        <li class="nav-link"><a href="/">Home</a></li>
+        <li class="nav-link"><a href="/name">All Names</a></li>
+        <li class="nav-link"><a href="/name/donated">Names with Donations</a></li>
+        <li class="nav-link"><a href="/donation">All Donations</a></li>
+        <li class="nav-link"><a href="/donation/raw">CSV-ish Output of Donations</a></li>
       </ul>
     </nav>
   </div>

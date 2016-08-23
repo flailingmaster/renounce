@@ -96,7 +96,7 @@ class CreateDonations extends Command
               'location' => $donation->location,
               'occupation' => $donation->occupation,
               'amount' => $donation->amount,
-              'int_amount' => $dec,
+              'dec_amount' => $dec,
               'recipient' => $donation->recipient,
             );
 
@@ -122,7 +122,7 @@ class CreateDonations extends Command
           'location' => $donation['location'],
           'occupation' => $donation['occupation'],
           'amount' => $donation['amount'],
-          'int_amount' => $donation['int_amount'],
+          'dec_amount' => $donation['dec_amount'],
           'recipient' => $donation['recipient'],
         ));
 
