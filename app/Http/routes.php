@@ -13,6 +13,7 @@
 use App\Report;
 use App\Name;
 use App\Donation;
+use Cache;
 
 Route::get('/', function () {
     //return view('welcome');
@@ -43,7 +44,10 @@ Route::resource('name', 'NameController', ['only' => [
 ]]);
 
 Route::get('donation/raw', function () {
-    $donations = Donation::all();
+    $donations = Cache::remember('donations', 10, function() {
+      return Donation::all();
+    });
+
     return view('donations_raw', ['donations' => $donations]);
 });
 
