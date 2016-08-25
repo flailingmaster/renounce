@@ -6,6 +6,6 @@
 "{{$donation->donation_date}}",
 "{{$donation->location}}",
 "{{$donation->occupation}}",
-"{{$donation->amount}}",
+"{{$donation->dec_amount}}",
 "{{$donation->recipient}}"<br>
 @endforeach
