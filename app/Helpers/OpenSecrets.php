@@ -21,6 +21,32 @@ class OpenSecrets implements OpenSecretsContract
 
       // submit that form
       $crawler = $client->submit($form);
+
+      // parse results
+      $donation = $this->parseResults($crawler);
+      // if there's another page
+      $nextpage = $this->getNext($crawler) ? $this->getNext($crawler) : false;
+      if ($nextpage == TRUE) {
+      // while there's another page
+        while($nextpage == TRUE) {
+          // parseResults and append to $donation;
+          $donation[] = $this->parseResults($nextpage);
+          // get the next page
+          $nextpage = $this->getNext($crawler) ? $this->getNext($crawler) : false;
+        }
+      }
+
+      return $donation;
+    }
+    public function getNext($crawler) {
+      // given a crawler, see if there's a next page
+      // if next page exists, return crawler to the next page
+      // else
+      return false
+
+    }
+    
+    public function parseResults($crawler) {
       $donation = [];
       $crawler->filter('tbody > tr')->each(function ($node, $i) use (&$donation) {
         $row = [];
@@ -56,7 +82,5 @@ class OpenSecrets implements OpenSecretsContract
 
           $donation[] = $row;
       });
-          return $donation;
     }
-
 }

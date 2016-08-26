@@ -52,6 +52,20 @@ class CacheDonation extends Command
         $id_array = Name::where('queried', false)->take($query_number)->get(['id'])->toArray();
         $this->multiplelookup($id_array);
       //$this->info("this is the donation: \n".print_r($donations, TRUE));
+      } elseif ($this->option('recache'))
+      {
+        //need to recache donations with 50 donations
+        //and queried = false
+        $id_array = Name::where('raw_count', 50)
+        ->where ('queried', false)
+        ->take($query_number)
+        ->get(['id'])
+        ->toArray();
+
+        // foreach id
+        // delete all the associated donation, if any exist
+
+        $this->multiplelookup($id_array);
       }
     }
 
