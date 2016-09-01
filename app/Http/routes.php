@@ -13,7 +13,7 @@
 use App\Report;
 use App\Name;
 use App\Donation;
-use Cache;
+//use Cache;
 
 Route::get('/', function () {
     //return view('welcome');

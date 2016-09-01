@@ -23,9 +23,27 @@ class OpenSecrets implements OpenSecretsContract
       $crawler = $client->submit($form);
 
       // parse results
+
       $donation = $this->parseResults($crawler);
+      $linkcrawler = $crawler->selectLink("Next");
+      //var_dump($test);
+      //$nextpage = $client->click($link);
+
+
+      //$donation = $this->parseResults($nextpage);
       // if there's another page
-      $nextpage = $this->getNext($crawler) ? $this->getNext($crawler) : false;
+      while ($linkcrawler->count() != 0) {
+        //$donation = "there's a next page";
+        $link = $linkcrawler->link();
+        $nextpage = $client->click($link);
+        $donation = array_merge($donation, $this->parseResults($nextpage));
+        $linkcrawler = $nextpage->selectLink("Next");
+        print "loop entered: ". $linkcrawler->count(). "\n";
+      }
+      //$nextpage = $this->getNext($crawler) ? $this->getNext($crawler) : false;
+      //$nextpage = "test";
+      //$this->info("next page: ".$nextpage);
+      /*
       if ($nextpage == TRUE) {
       // while there's another page
         while($nextpage == TRUE) {
@@ -34,18 +52,29 @@ class OpenSecrets implements OpenSecretsContract
           // get the next page
           $nextpage = $this->getNext($crawler) ? $this->getNext($crawler) : false;
         }
-      }
+      }*/
 
       return $donation;
+    }
+    public function isNext($crawler) {
+      // given a crawler, see if there's a next page
+      // if next page exists, return crawler to the next page
+      // else
+      $crawler->selectLink('Next ')->link();
+      return $client->click($link);
+
     }
     public function getNext($crawler) {
       // given a crawler, see if there's a next page
       // if next page exists, return crawler to the next page
       // else
-      return false
+      $client = $crawler->selectLink("Next ")->link();
+      var_dump($client);
+      $client->click($link);
+      return "test";
 
     }
-    
+
     public function parseResults($crawler) {
       $donation = [];
       $crawler->filter('tbody > tr')->each(function ($node, $i) use (&$donation) {
@@ -80,7 +109,10 @@ class OpenSecrets implements OpenSecretsContract
             $inc++;
         }
 
+
           $donation[] = $row;
+
       });
+      return $donation;
     }
 }
