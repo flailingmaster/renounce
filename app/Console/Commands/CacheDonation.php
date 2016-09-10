@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Helpers\Contracts\OpenSecretsContract;
 use App\Name;
+use App\Donation;
 
 class CacheDonation extends Command
 {
@@ -13,7 +14,7 @@ class CacheDonation extends Command
      *
      * @var string
      */
-    protected $signature = 'secrets:cache {id?} {--test} {--all} {--n=10}';
+    protected $signature = 'secrets:cache {id?} {--test} {--recache} {--all} {--n=10}';
 
     /**
      * The console command description.
@@ -57,15 +58,26 @@ class CacheDonation extends Command
         //need to recache donations with 50 donations
         //and queried = false
         $id_array = Name::where('raw_count', 50)
-        ->where ('queried', false)
-        ->take($query_number)
         ->get(['id'])
         ->toArray();
 
         // foreach id
         // delete all the associated donation, if any exist
-
-        $this->multiplelookup($id_array);
+        $this->resetdonation($id_array);
+        $this->info("id count:".count($id_array));
+        //$this->multiplelookup($id_array);
+      }
+    }
+    public function resetdonation($ids)
+    {
+      foreach ($ids as $key => $id) {
+        $nameobj = Name::findOrFail($id['id']);
+        $name = $nameobj->name;
+        $this->info(" id: ".$id['id']."\tname: $name");
+        $donations = Donation::where('name_id', $id['id']);
+        foreach ($donations as $donation) {
+          $this->info("donation id: ".$donation['id']."\t\trecipient".$donation['recipient'].$donation['amount']);
+        }
       }
     }
 
