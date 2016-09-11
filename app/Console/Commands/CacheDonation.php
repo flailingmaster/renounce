@@ -65,7 +65,7 @@ class CacheDonation extends Command
         // delete all the associated donation, if any exist
         $this->resetdonation($id_array);
         $this->info("id count:".count($id_array));
-        //$this->multiplelookup($id_array);
+        $this->multiplelookup($id_array);
       }
     }
     public function resetdonation($ids)
@@ -84,7 +84,7 @@ class CacheDonation extends Command
     public function multiplelookup($ids)
     {
       $output_array = [];
-      $current_count = Name::where('queried', false)->count();
+      $current_count = count($ids);
       foreach($ids as $key => $id) {
 
         $nameobj = Name::findOrFail($id['id']);
@@ -111,8 +111,7 @@ class CacheDonation extends Command
       }
       $final_count = Name::where('queried', false)->count();
       $this->table(['id', 'count', 'name'], $output_array);
-      $this->info("initial count: $current_count");
-      $this->info("final count: $final_count");
+      $this->info("id count: $current_count");
     }
 
 }
