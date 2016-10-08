@@ -1,8 +1,8 @@
 @foreach ($donations as $donation)
 @if ($donation->name->report->publication_date < $donation->donation_date)
-    "FLAG"
+    "AFTER"
 @else
-    "NONE"
+    "BEFORE"
 @endif
 "{{$donation->name->name}}",
 "{{$donation->name->document_number}}",
