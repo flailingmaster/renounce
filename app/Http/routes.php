@@ -51,6 +51,10 @@ Route::get('donation/raw', function () {
     return view('donations_raw', ['donations' => $donations]);
 });
 
+//Would be helpful to have a sheet of ONLY the names that appear in both places (election donations & expatriation) with a field for “year of expatriation” and “year of most recent donation”
+//Would be helpful to have a sheet of ONLY people who appear in both places and fields “total donations ($)” “first year donation detected” “most recent year donation detected”
+//Would be helpful to have a sheet of ONLY people who seem to have made a donation after their expatriation publication year (I’ll check these manually)
+
 Route::resource('donation', 'DonationController', ['only' => [
     'index', 'show'
 ]]);
