@@ -39,6 +39,15 @@ Route::get('name/donated', function () {
     return view('names', ['names' => $names]);
 });
 
+// "name" "location" “year of expatriation” and “year of most recent donation”
+Route::get('name/simpleview', function () {
+});
+
+// "name" “total donations ($)” “first year donation detected” “most recent year donation detected”
+Route::get('name/donatedetails', function () {
+});
+
+// "names donated after expatriation"
 Route::get('name/donatedafter', function () {
     $donations = Donation::all();
     return view('donations_after', ['donations' => $donations]);
