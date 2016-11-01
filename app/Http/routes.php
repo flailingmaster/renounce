@@ -41,6 +41,19 @@ Route::get('name/donated', function () {
 
 // "name" "location" “year of expatriation” and “year of most recent donation”
 Route::get('name/simpleview', function () {
+  $most_recent_donations = DB::select("SELECT name_id, location, MAX(donation_date) FROM donation d GROUP BY name_id, location");
+
+  /* foreach ($most_recent_donations as $name_id, location)
+  SELECT name_id, location, MAX(donation_date) FROM donation d GROUP BY name_id, location;
+
+  SELECT d.name_id, n.name, d.location, r.publication_date, MAX(d.donation_date) 
+  FROM donations d
+  JOIN names n ON d.name_id = n.id
+  JOIN reports r ON n.document_number = r.id
+  GROUP BY d.name_id, d.location;
+
+  */
+
 });
 
 // "name" “total donations ($)” “first year donation detected” “most recent year donation detected”
